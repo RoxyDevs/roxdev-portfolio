@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roxana Alejandra Rolón — Full-Stack Developer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #050505;
+            --bg-secondary: #0a0a0f;
+            --bg-card: #0f0f1a;
+            --text-primary: #e2e8f0;
+            --text-secondary: #94a3b8;
+            --accent: #a78bfa;
+            --accent-glow: rgba(167, 139, 250, 0.3);
+            --accent-secondary: #60a5fa;
+            --border: rgba(255,255,255,0.06);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        #starfield {
+            position: fixed; top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 0; pointer-events: none;
+        }
+
+        nav {
+            position: fixed; top: 0; left: 0; right: 0;
+            z-index: 100;
+            padding: 1.2rem 4%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(5,5,5,0.7);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .logo {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.3rem; font-weight: 600;
+            color: var(--accent); text-decoration: none;
+            display: flex; align-items: center; gap: 0.3rem;
+        }
+        .logo span { color: var(--text-primary); }
+
+        .nav-center {
+            display: flex;
+            align-items: center;
+            gap: 2.5rem;
+        }
+
+        .nav-links {
+            display: flex; gap: 2.5rem; list-style: none;
+        }
+        .nav-links a {
+            color: var(--text-secondary); text-decoration: none;
+            font-size: 0.95rem; font-weight: 500;
+            transition: color 0.3s ease; position: relative;
+        }
+        .nav-links a:hover { color: var(--text-primary); }
+        .nav-links a::after {
+            content: ''; position: absolute;
+            bottom: -4px; left: 0; width: 0; height: 2px;
+            background: var(--accent); transition: width 0.3s ease;
+        }
+        .nav-links a:hover::after { width: 100%; }
+
+        .lang-selector {
+            position: relative;
+        }
+        .lang-btn {
+            display: flex; align-items: center; gap: 0.4rem;
+            padding: 0.5rem 0.9rem;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            font-family: 'Inter', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .lang-btn:hover {
+            border-color: var(--accent);
+            color: var(--text-primary);
+        }
+        .lang-btn svg { width: 14px; height: 14px; }
+        .lang-dropdown {
+            position: absolute;
+            top: calc(100% + 0.5rem);
+            right: 0;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 0.4rem;
+            min-width: 140px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-8px);
+            transition: all 0.25s ease;
+            z-index: 200;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+        }
+        .lang-dropdown.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        .lang-option {
+            display: flex; align-items: center; gap: 0.6rem;
+            padding: 0.55rem 0.8rem;
+            border-radius: 6px;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+        }
+        .lang-option:hover, .lang-option.active {
+            background: rgba(167, 139, 250, 0.1);
+            color: var(--accent);
+        }
+        .lang-flag {
+            width: 18px; height: 14px;
+            border-radius: 2px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 700;
+        }
+
+        .resume-btn {
+            padding: 0.6rem 1.4rem;
+            border: 1px solid var(--border); border-radius: 8px;
+            color: var(--text-primary); text-decoration: none;
+            font-size: 0.9rem; font-weight: 500;
+            transition: all 0.3s ease;
+            display: flex; align-items: center; gap: 0.4rem;
+        }
+        .resume-btn:hover {
+            border-color: var(--accent);
+            background: rgba(167, 139, 250, 0.08);
+        }
+        .mobile-menu-btn {
+            display: none; background: none; border: none;
+            color: var(--text-primary); font-size: 1.5rem; cursor: pointer;
+        }
+
+        main { position: relative; z-index: 1; }
+        section {
+            padding: 6rem 8%; max-width: 1200px; margin: 0 auto;
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            text-align: center; padding-top: 5rem;
+        }
+        .hero h1 {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 800; line-height: 1.1; margin-bottom: 1rem;
+            background: linear-gradient(135deg, #e2e8f0 0%, #a78bfa 50%, #60a5fa 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeInUp 1s ease;
+        }
+        .hero .subtitle {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: clamp(1rem, 2.5vw, 1.4rem);
+            color: var(--accent); margin-bottom: 1.5rem;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+        .hero .description {
+            font-size: 1.15rem; color: var(--text-secondary);
+            max-width: 600px; margin-bottom: 2.5rem;
+            animation: fadeInUp 1s ease 0.4s both;
+        }
+        .hero-socials {
+            display: flex; gap: 1rem;
+            animation: fadeInUp 1s ease 0.6s both;
+        }
+        .hero-socials a {
+            width: 48px; height: 48px; border-radius: 12px;
+            border: 1px solid var(--border);
+            display: flex; align-items: center; justify-content: center;
+            color: var(--text-secondary); text-decoration: none;
+            transition: all 0.3s ease;
+            background: rgba(255,255,255,0.02);
+        }
+        .hero-socials a:hover {
+            border-color: var(--accent); color: var(--accent);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px var(--accent-glow);
+        }
+        .scroll-indicator {
+            position: absolute; bottom: 2rem; left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+        }
+        .scroll-indicator svg { width: 24px; height: 24px; color: var(--text-secondary); }
+
+        .section-header { margin-bottom: 3rem; }
+        .section-header h2 {
+            font-size: 2rem; font-weight: 700; margin-bottom: 0.5rem;
+            display: flex; align-items: center; gap: 0.8rem;
+        }
+        .section-header h2::before {
+            content: ''; display: block;
+            width: 4px; height: 28px;
+            background: var(--accent); border-radius: 2px;
+        }
+        .section-header p { color: var(--text-secondary); font-size: 1.05rem; }
+
+        .about-content {
+            display: grid; grid-template-columns: 1fr 1fr;
+            gap: 4rem; align-items: start;
+        }
+        .about-text {
+            color: var(--text-secondary);
+            font-size: 1.05rem; line-height: 1.8;
+        }
+        .about-text p { margin-bottom: 1.2rem; }
+        .about-text strong { color: var(--text-primary); }
+        .about-tags {
+            display: flex; flex-wrap: wrap; gap: 0.7rem; margin-top: 1.5rem;
+        }
+        .tag {
+            padding: 0.5rem 1rem; border-radius: 20px;
+            border: 1px solid var(--border);
+            font-size: 0.85rem; color: var(--text-secondary);
+            background: rgba(255,255,255,0.02);
+            transition: all 0.3s ease;
+        }
+        .tag:hover { border-color: var(--accent); color: var(--accent); }
+
+        .about-image { position: relative; }
+        .about-image img {
+            width: 100%; max-width: 350px; border-radius: 20px;
+            border: 1px solid var(--border); display: block; margin: 0 auto;
+        }
+        .about-image::before {
+            content: ''; position: absolute;
+            top: 15px; left: 15px; right: -15px; bottom: -15px;
+            border: 1px solid var(--accent); border-radius: 20px;
+            opacity: 0.3; z-index: -1;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 2rem;
+        }
+        .project-card {
+            background: var(--bg-card); border: 1px solid var(--border);
+            border-radius: 16px; overflow: hidden;
+            transition: all 0.4s ease; position: relative;
+        }
+        .project-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(167, 139, 250, 0.3);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4), 0 0 40px var(--accent-glow);
+        }
+        .project-image {
+            width: 100%; height: 200px;
+            background: linear-gradient(135deg, #1a1a2e 0%, #0f0f1a 100%);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 3rem; position: relative; overflow: hidden;
+        }
+        .project-image::after {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(180deg, transparent 50%, var(--bg-card) 100%);
+        }
+        .project-content { padding: 1.5rem; }
+        .project-content h3 { font-size: 1.2rem; font-weight: 600; margin-bottom: 0.5rem; }
+        .project-content h3 a {
+            color: var(--text-primary); text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        .project-content h3 a:hover { color: var(--accent); }
+        .project-content p {
+            color: var(--text-secondary); font-size: 0.95rem;
+            line-height: 1.6; margin-bottom: 1rem;
+        }
+        .project-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+        .project-tag {
+            padding: 0.3rem 0.7rem; border-radius: 6px;
+            background: rgba(167, 139, 250, 0.1);
+            color: var(--accent); font-size: 0.78rem; font-weight: 500;
+        }
+        .featured-badge {
+            position: absolute; top: 1rem; right: 1rem;
+            padding: 0.3rem 0.8rem;
+            background: rgba(167, 139, 250, 0.2);
+            color: var(--accent); font-size: 0.75rem; font-weight: 600;
+            border-radius: 20px;
+            border: 1px solid rgba(167, 139, 250, 0.3);
+            z-index: 2;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.5rem;
+        }
+        .skill-category {
+            background: var(--bg-card); border: 1px solid var(--border);
+            border-radius: 16px; padding: 1.8rem;
+            transition: all 0.3s ease;
+        }
+        .skill-category:hover { border-color: rgba(167, 139, 250, 0.2); }
+        .skill-category h3 {
+            font-size: 1.1rem; font-weight: 600; margin-bottom: 1.2rem;
+            color: var(--accent); display: flex; align-items: center; gap: 0.5rem;
+        }
+        .skill-list { display: flex; flex-direction: column; gap: 0.7rem; }
+        .skill-item {
+            display: flex; align-items: center; gap: 0.7rem;
+            color: var(--text-secondary); font-size: 0.95rem;
+        }
+        .skill-item::before { content: '▸'; color: var(--accent); font-size: 0.8rem; }
+
+        .contact-section { text-align: center; }
+        .contact-section h2 { font-size: 2.5rem; font-weight: 800; margin-bottom: 1rem; }
+        .contact-section > p { color: var(--text-secondary); font-size: 1.1rem; margin-bottom: 3rem; }
+        .contact-grid {
+            display: grid; grid-template-columns: 1fr 1fr;
+            gap: 3rem; text-align: left;
+        }
+        .contact-info h3 { font-size: 1.2rem; margin-bottom: 1rem; color: var(--text-primary); }
+        .contact-info p { color: var(--text-secondary); margin-bottom: 1.5rem; }
+        .social-links {
+            display: flex; gap: 1rem; flex-wrap: wrap;
+        }
+        .social-links a {
+            width: 44px; height: 44px; border-radius: 10px;
+            border: 1px solid var(--border);
+            display: flex; align-items: center; justify-content: center;
+            color: var(--text-secondary); text-decoration: none;
+            transition: all 0.3s ease;
+            background: rgba(255,255,255,0.02);
+        }
+        .social-links a:hover {
+            border-color: var(--accent); color: var(--accent);
+            transform: translateY(-2px);
+        }
+        .opportunities h3 { font-size: 1.2rem; margin-bottom: 1rem; color: var(--text-primary); }
+        .opportunities ul { list-style: none; color: var(--text-secondary); }
+        .opportunities li {
+            padding: 0.5rem 0; padding-left: 1.5rem; position: relative;
+        }
+        .opportunities li::before { content: '•'; position: absolute; left: 0; color: var(--accent); }
+        .fb-pages {
+            margin-top: 1rem;
+            display: flex; flex-direction: column; gap: 0.5rem;
+        }
+        .fb-pages a {
+            color: var(--text-secondary); text-decoration: none;
+            font-size: 0.9rem; transition: color 0.3s ease;
+        }
+        .fb-pages a:hover { color: var(--accent); }
+        .contact-cta {
+            margin-top: 3rem; padding: 2rem;
+            background: var(--bg-card); border: 1px solid var(--border);
+            border-radius: 16px;
+        }
+        .contact-cta a {
+            display: inline-block; padding: 0.9rem 2rem;
+            background: var(--accent); color: var(--bg-primary);
+            text-decoration: none; border-radius: 10px;
+            font-weight: 600; font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        .contact-cta a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px var(--accent-glow);
+        }
+
+        footer {
+            text-align: center; padding: 3rem;
+            color: var(--text-secondary); font-size: 0.9rem;
+            border-top: 1px solid var(--border);
+        }
+        footer a { color: var(--accent); text-decoration: none; }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+            40% { transform: translateX(-50%) translateY(-10px); }
+            60% { transform: translateX(-50%) translateY(-5px); }
+        }
+        .fade-in {
+            opacity: 0; transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+        .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+        @media (max-width: 900px) {
+            .about-content, .contact-grid { grid-template-columns: 1fr; }
+            .about-image { order: -1; }
+            .nav-links {
+                display: none; position: absolute;
+                top: 100%; left: 0; right: 0;
+                background: var(--bg-primary);
+                flex-direction: column;
+                padding: 1.5rem;
+                border-bottom: 1px solid var(--border);
+                gap: 1.2rem;
+            }
+            .nav-links.active { display: flex; }
+            .mobile-menu-btn { display: block; }
+            section { padding: 4rem 5%; }
+            .nav-center { gap: 1rem; }
+        }
+        @media (max-width: 600px) {
+            .projects-grid { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 2.2rem; }
+            .lang-selector { display: none; }
+        }
+    </style>
+<base target="_blank">
+</head>
+<body>
+    <canvas id="starfield"></canvas>
+
+    <nav id="navbar">
+        <a href="#" class="logo">&lt;RoxDev<span>_ /&gt;</span></a>
+        <div class="nav-center">
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#about" data-i18n="nav.about">About</a></li>
+                <li><a href="#projects" data-i18n="nav.projects">Projects</a></li>
+                <li><a href="#skills" data-i18n="nav.skills">Skills</a></li>
+                <li><a href="#contact" data-i18n="nav.contact">Contact</a></li>
+            </ul>
+            <div class="lang-selector">
+                <button class="lang-btn" id="langBtn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                    <span id="currentLang">EN</span>
+                </button>
+                <div class="lang-dropdown" id="langDropdown">
+                    <div class="lang-option active" data-lang="en">
+                        <span class="lang-flag" style="background:#3b82f6;color:#fff;">EN</span>
+                        English
+                    </div>
+                    <div class="lang-option" data-lang="es">
+                        <span class="lang-flag" style="background:#f59e0b;color:#fff;">ES</span>
+                        Español
+                    </div>
+                    <div class="lang-option" data-lang="pt">
+                        <span class="lang-flag" style="background:#10b981;color:#fff;">PT</span>
+                        Português
+                    </div>
+                    <div class="lang-option" data-lang="zh">
+                        <span class="lang-flag" style="background:#ef4444;color:#fff;">中</span>
+                        中文
+                    </div>
+                    <div class="lang-option" data-lang="ru">
+                        <span class="lang-flag" style="background:#8b5cf6;color:#fff;">RU</span>
+                        Русский
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:1rem;">
+            <a href="https://github.com/RoxyDevs" target="_blank" class="resume-btn" style="gap:0.5rem;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+                GitHub
+            </a>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+        </div>
+    </nav>
+
+    <main>
+        <!-- Hero -->
+        <section class="hero">
+            <h1 data-i18n="hero.title">Hello, I'm Roxana</h1>
+            <p class="subtitle" data-i18n="hero.subtitle">Full-Stack Developer · CEO & Co-Founder</p>
+            <p class="description" data-i18n="hero.description">I build solutions with code and artificial intelligence. From governance platforms to trading systems, I transform complex ideas into products that make an impact.</p>
+            <div class="hero-socials">
+                <a href="https://github.com/RoxyDevs" target="_blank" aria-label="GitHub">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+                </a>
+                <a href="https://www.instagram.com/its.roxdev/" target="_blank" aria-label="Instagram">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+                </a>
+                <a href="https://www.facebook.com/roxfsdev/" target="_blank" aria-label="Facebook">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+                </a>
+                <a href="https://www.tiktok.com/@its.roxdev" target="_blank" aria-label="TikTok">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg>
+                </a>
+                <a href="https://www.linkedin.com/in/roxana-rolon/" target="_blank" aria-label="LinkedIn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+                </a>
+            </div>
+            <div class="scroll-indicator">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 13l5 5 5-5M7 6l5 5 5-5"/></svg>
+            </div>
+        </section>
+
+        <!-- About -->
+        <section id="about">
+            <div class="section-header fade-in">
+                <h2 data-i18n="about.title">About Me</h2>
+                <p data-i18n="about.subtitle">Learn more about my journey and what drives me.</p>
+            </div>
+            <div class="about-content fade-in">
+                <div class="about-text">
+                    <p data-i18n="about.p1">I'm <strong>Roxana Alejandra Rolón</strong>, a Full-Stack Developer from <strong>Argentina</strong> with a passion for building products that combine <strong>quality code</strong> with <strong>artificial intelligence</strong>.</p>
+                    <p data-i18n="about.p2">As <strong>CEO and Co-Founder of <a href="https://axistechai.com" target="_blank" style="color:var(--accent);text-decoration:none;">Axis Tech AI</a></strong>, I lead the development of customized technology solutions for governments, businesses, and content creators across Latin America. We don't sell generic software: we build systems that adapt to each client's voice, structure, and goals.</p>
+                    <p data-i18n="about.p3">I'm also the mind behind <strong><a href="https://partidoia.com.ar" target="_blank" style="color:var(--accent);text-decoration:none;">Partido IA</a></strong>, a governance platform where AI agents based on historical figures debate laws and legislative projects in real time, democratizing access to political information.</p>
+                    <p data-i18n="about.p4">When I'm not coding, you'll find me exploring new technologies, leading teams, or thinking about the next solution that will change the way we interact with technology.</p>
+                    <div class="about-tags">
+                        <span class="tag" data-i18n="tag.fullstack">Full-Stack Developer</span>
+                        <span class="tag" data-i18n="tag.ai">AI Engineer</span>
+                        <span class="tag" data-i18n="tag.ceo">CEO & Co-Founder</span>
+                        <span class="tag" data-i18n="tag.solver">Problem Solver</span>
+                        <span class="tag">Argentina 🇦🇷</span>
+                    </div>
+                </div>
+                <div class="about-image">
+                    <img src="https://ui-avatars.com/api/?name=Roxana+Rolon&background=a78bfa&color=fff&size=350&font-size=0.4" alt="Roxana Alejandra Rolón">
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects -->
+        <section id="projects">
+            <div class="section-header fade-in">
+                <h2 data-i18n="projects.title">Featured Projects</h2>
+                <p data-i18n="projects.subtitle">These are some of my most ambitious projects that showcase my technical skills and product vision.</p>
+            </div>
+            <div class="projects-grid">
+                <div class="project-card fade-in">
+                    <span class="featured-badge" data-i18n="badge.ceo">CEO & Co-Founder</span>
+                    <div class="project-image" style="background: linear-gradient(135deg, #1e1b4b 0%, #0f0f1a 100%);">
+                        <span style="font-size: 3.5rem;">⚡</span>
+                    </div>
+                    <div class="project-content">
+                        <h3><a href="https://axistechai.com" target="_blank">Axis Tech AI</a></h3>
+                        <p data-i18n="project.axis">AI company based in Rosario, Argentina. We develop customized AI systems for governments, businesses, and creators. 40% reduction in operational costs, 48-hour implementation, and 100% measurable results.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">Next.js</span>
+                            <span class="project-tag">AI Agents</span>
+                            <span class="project-tag">Automation</span>
+                            <span class="project-tag">SaaS</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card fade-in">
+                    <span class="featured-badge" data-i18n="badge.live">Live</span>
+                    <div class="project-image" style="background: linear-gradient(135deg, #312e81 0%, #0f0f1a 100%);">
+                        <span style="font-size: 3.5rem;">🏛️</span>
+                    </div>
+                    <div class="project-content">
+                        <h3><a href="https://partidoia.com.ar" target="_blank">Partido IA</a></h3>
+                        <p data-i18n="project.partido">Governance system with 264 AI agents based on historical figures debating laws and legislative projects from Santa Fe in real time. 12 ministries, live debates, and citizen participation.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">Next.js</span>
+                            <span class="project-tag">AI Agents</span>
+                            <span class="project-tag">Real-time</span>
+                            <span class="project-tag">Governance</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card fade-in">
+                    <div class="project-image" style="background: linear-gradient(135deg, #1a1a2e 0%, #0f0f1a 100%);">
+                        <span style="font-size: 3.5rem;">📈</span>
+                    </div>
+                    <div class="project-content">
+                        <h3><a href="https://github.com/RoxyDevs/candle-master-pro" target="_blank">CandleMaster Pro</a></h3>
+                        <p data-i18n="project.candle">Advanced trading analysis platform built with Next.js, Tailwind CSS, and Genkit AI. Real-time pattern recognition, strategy backtesting, and professional-grade interface.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">Next.js</span>
+                            <span class="project-tag">Tailwind CSS</span>
+                            <span class="project-tag">Genkit AI</span>
+                            <span class="project-tag">Trading</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills -->
+        <section id="skills">
+            <div class="section-header fade-in">
+                <h2 data-i18n="skills.title">Skills & Technologies</h2>
+                <p data-i18n="skills.subtitle">My technical arsenal for building modern and scalable applications.</p>
+            </div>
+            <div class="skills-grid">
+                <div class="skill-category fade-in">
+                    <h3 data-i18n="skill.lang">🚀 Languages</h3>
+                    <div class="skill-list">
+                        <span class="skill-item">JavaScript / TypeScript</span>
+                        <span class="skill-item">Python</span>
+                        <span class="skill-item">HTML5 / CSS3</span>
+                        <span class="skill-item">SQL</span>
+                    </div>
+                </div>
+                <div class="skill-category fade-in">
+                    <h3 data-i18n="skill.backend">⚙️ Backend & Cloud</h3>
+                    <div class="skill-list">
+                        <span class="skill-item">Node.js</span>
+                        <span class="skill-item">Express.js</span>
+                        <span class="skill-item">MongoDB</span>
+                        <span class="skill-item">RESTful APIs</span>
+                        <span class="skill-item">Firebase / Supabase</span>
+                    </div>
+                </div>
+                <div class="skill-category fade-in">
+                    <h3 data-i18n="skill.frontend">🎨 Frontend & Mobile</h3>
+                    <div class="skill-list">
+                        <span class="skill-item">React / Next.js</span>
+                        <span class="skill-item">Tailwind CSS</span>
+                        <span class="skill-item">Responsive Design</span>
+                        <span class="skill-item">UI/UX Principles</span>
+                    </div>
+                </div>
+                <div class="skill-category fade-in">
+                    <h3 data-i18n="skill.ai">🤖 Data & AI</h3>
+                    <div class="skill-list">
+                        <span class="skill-item">Genkit AI</span>
+                        <span class="skill-item">AI Agents</span>
+                        <span class="skill-item">Automation</span>
+                        <span class="skill-item">Data Analysis</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact -->
+        <section id="contact" class="contact-section">
+            <h2 class="fade-in" data-i18n="contact.title">Let's Connect</h2>
+            <p class="fade-in" data-i18n="contact.subtitle">Ready to collaborate on your next project?</p>
+            <div class="contact-grid fade-in">
+                <div class="contact-info">
+                    <h3 data-i18n="contact.getintouch">Get in Touch</h3>
+                    <p data-i18n="contact.desc">I'm open to new opportunities, collaborations, and challenging projects. Don't hesitate to reach out through any of my networks.</p>
+                    <div class="social-links">
+                        <a href="https://github.com/RoxyDevs" target="_blank" aria-label="GitHub">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+                        </a>
+                        <a href="https://www.instagram.com/its.roxdev/" target="_blank" aria-label="Instagram">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+                        </a>
+                        <a href="https://www.tiktok.com/@its.roxdev" target="_blank" aria-label="TikTok">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg>
+                        </a>
+                        <a href="https://www.linkedin.com/in/roxana-rolon/" target="_blank" aria-label="LinkedIn">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+                        </a>
+                    </div>
+                    <div class="fb-pages">
+                        <span style="color:var(--text-secondary);font-size:0.85rem;margin-top:0.5rem;display:block;" data-i18n="contact.fb">Facebook:</span>
+                        <a href="https://www.facebook.com/roxfsdev/" target="_blank" data-i18n="contact.fbpersonal">👤 Personal Page</a>
+                        <a href="https://www.facebook.com/profile.php?id=61568695055359" target="_blank">🏢 Axis Tech AI</a>
+                    </div>
+                </div>
+                <div class="opportunities">
+                    <h3 data-i18n="contact.open">Open to Opportunities</h3>
+                    <ul>
+                        <li data-i18n="opp.freelance">Freelance & Contract work</li>
+                        <li data-i18n="opp.startup">Startup & Business collaborations</li>
+                        <li data-i18n="opp.ai">AI Consulting</li>
+                        <li data-i18n="opp.speaking">Speaking engagements</li>
+                        <li data-i18n="opp.fullstack">Full-Stack Development</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="contact-cta fade-in">
+                <a href="mailto:contacto@axistechai.com" data-i18n="contact.cta">Send Email</a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p><span data-i18n="footer.made">Made with</span> 💜 <span data-i18n="footer.by">by</span> <strong>Roxana Alejandra Rolón</strong> · Argentina · 2026</p>
+    </footer>
+
+    <script>
+        // ─── TRANSLATIONS ───
+        const translations = {
+            en: {
+                "nav.about": "About",
+                "nav.projects": "Projects",
+                "nav.skills": "Skills",
+                "nav.contact": "Contact",
+                "hero.title": "Hello, I'm Roxana",
+                "hero.subtitle": "Full-Stack Developer · CEO & Co-Founder",
+                "hero.description": "I build solutions with code and artificial intelligence. From governance platforms to trading systems, I transform complex ideas into products that make an impact.",
+                "about.title": "About Me",
+                "about.subtitle": "Learn more about my journey and what drives me.",
+                "about.p1": "I'm <strong>Roxana Alejandra Rolón</strong>, a Full-Stack Developer from <strong>Argentina</strong> with a passion for building products that combine <strong>quality code</strong> with <strong>artificial intelligence</strong>.",
+                "about.p2": "As <strong>CEO and Co-Founder of Axis Tech AI</strong>, I lead the development of customized technology solutions for governments, businesses, and content creators across Latin America. We don't sell generic software: we build systems that adapt to each client's voice, structure, and goals.",
+                "about.p3": "I'm also the mind behind <strong>Partido IA</strong>, a governance platform where AI agents based on historical figures debate laws and legislative projects in real time, democratizing access to political information.",
+                "about.p4": "When I'm not coding, you'll find me exploring new technologies, leading teams, or thinking about the next solution that will change the way we interact with technology.",
+                "tag.fullstack": "Full-Stack Developer",
+                "tag.ai": "AI Engineer",
+                "tag.ceo": "CEO & Co-Founder",
+                "tag.solver": "Problem Solver",
+                "projects.title": "Featured Projects",
+                "projects.subtitle": "These are some of my most ambitious projects that showcase my technical skills and product vision.",
+                "badge.ceo": "CEO & Co-Founder",
+                "badge.live": "Live",
+                "project.axis": "AI company based in Rosario, Argentina. We develop customized AI systems for governments, businesses, and creators. 40% reduction in operational costs, 48-hour implementation, and 100% measurable results.",
+                "project.partido": "Governance system with 264 AI agents based on historical figures debating laws and legislative projects from Santa Fe in real time. 12 ministries, live debates, and citizen participation.",
+                "project.candle": "Advanced trading analysis platform built with Next.js, Tailwind CSS, and Genkit AI. Real-time pattern recognition, strategy backtesting, and professional-grade interface.",
+                "skills.title": "Skills & Technologies",
+                "skills.subtitle": "My technical arsenal for building modern and scalable applications.",
+                "skill.lang": "🚀 Languages",
+                "skill.backend": "⚙️ Backend & Cloud",
+                "skill.frontend": "🎨 Frontend & Mobile",
+                "skill.ai": "🤖 Data & AI",
+                "contact.title": "Let's Connect",
+                "contact.subtitle": "Ready to collaborate on your next project?",
+                "contact.getintouch": "Get in Touch",
+                "contact.desc": "I'm open to new opportunities, collaborations, and challenging projects. Don't hesitate to reach out through any of my networks.",
+                "contact.fb": "Facebook:",
+                "contact.fbpersonal": "👤 Personal Page",
+                "contact.open": "Open to Opportunities",
+                "opp.freelance": "Freelance & Contract work",
+                "opp.startup": "Startup & Business collaborations",
+                "opp.ai": "AI Consulting",
+                "opp.speaking": "Speaking engagements",
+                "opp.fullstack": "Full-Stack Development",
+                "contact.cta": "Send Email",
+                "footer.made": "Made with",
+                "footer.by": "by"
+            },
+            es: {
+                "nav.about": "Sobre mí",
+                "nav.projects": "Proyectos",
+                "nav.skills": "Habilidades",
+                "nav.contact": "Contacto",
+                "hero.title": "Hola, soy Roxana",
+                "hero.subtitle": "Full-Stack Developer · CEO & Co-Founder",
+                "hero.description": "Construyo soluciones con código e inteligencia artificial. Desde plataformas de gobernanza hasta sistemas de trading, transformo ideas complejas en productos que impactan.",
+                "about.title": "Sobre mí",
+                "about.subtitle": "Conoce un poco más sobre mi trayectoria y lo que me impulsa.",
+                "about.p1": "Soy <strong>Roxana Alejandra Rolón</strong>, programadora Full-Stack de <strong>Argentina</strong> con una pasión por construir productos que combinen <strong>código de calidad</strong> con <strong>inteligencia artificial</strong>.",
+                "about.p2": "Como <strong>CEO y Co-Founder de Axis Tech AI</strong>, lidero el desarrollo de soluciones tecnológicas personalizadas para gobiernos, empresas y creadores de contenido en toda Latinoamérica. No vendemos software genérico: construimos sistemas que se adaptan a la voz, estructura y objetivos de cada cliente.",
+                "about.p3": "También soy la mente detrás de <strong>Partido IA</strong>, una plataforma de gobernanza donde agentes de inteligencia artificial basados en figuras históricas debaten leyes y proyectos legislativos en tiempo real, democratizando el acceso a la información política.",
+                "about.p4": "Cuando no estoy codeando, me encontrarás explorando nuevas tecnologías, liderando equipos o pensando en la próxima solución que cambiará la forma en que interactuamos con la tecnología.",
+                "tag.fullstack": "Full-Stack Developer",
+                "tag.ai": "AI Engineer",
+                "tag.ceo": "CEO & Co-Founder",
+                "tag.solver": "Problem Solver",
+                "projects.title": "Proyectos Destacados",
+                "projects.subtitle": "Estos son algunos de mis proyectos más ambiciosos que demuestran mis habilidades técnicas y visión de producto.",
+                "badge.ceo": "CEO & Co-Founder",
+                "badge.live": "En Vivo",
+                "project.axis": "Empresa de IA con sede en Rosario, Argentina. Desarrollamos sistemas de IA personalizados para gobiernos, empresas y creadores. Reducción del 40% en costos operativos, implementación en 48hs y resultados 100% medibles.",
+                "project.partido": "Sistema de gobernanza con 264 agentes de IA basados en figuras históricas que debaten leyes y proyectos legislativos de Santa Fe en tiempo real. 12 ministerios, debates en vivo y participación ciudadana.",
+                "project.candle": "Plataforma avanzada de análisis de trading construida con Next.js, Tailwind CSS y Genkit AI. Reconocimiento de patrones en tiempo real, backtesting de estrategias e interfaz profesional.",
+                "skills.title": "Habilidades y Tecnologías",
+                "skills.subtitle": "Mi arsenal técnico para construir aplicaciones modernas y escalables.",
+                "skill.lang": "🚀 Lenguajes",
+                "skill.backend": "⚙️ Backend y Cloud",
+                "skill.frontend": "🎨 Frontend y Mobile",
+                "skill.ai": "🤖 Datos e IA",
+                "contact.title": "Conectemos",
+                "contact.subtitle": "¿Listo para colaborar en tu próximo proyecto?",
+                "contact.getintouch": "Contacto",
+                "contact.desc": "Estoy abierta a nuevas oportunidades, colaboraciones y proyectos desafiantes. No dudes en contactarme por cualquiera de mis redes.",
+                "contact.fb": "Facebook:",
+                "contact.fbpersonal": "👤 Página Personal",
+                "contact.open": "Abierta a Oportunidades",
+                "opp.freelance": "Trabajo Freelance y por Contrato",
+                "opp.startup": "Colaboraciones con Startups y Empresas",
+                "opp.ai": "Consultoría de IA",
+                "opp.speaking": "Conferencias y Charlas",
+                "opp.fullstack": "Desarrollo Full-Stack",
+                "contact.cta": "Enviar Email",
+                "footer.made": "Hecho con",
+                "footer.by": "por"
+            },
+            pt: {
+                "nav.about": "Sobre",
+                "nav.projects": "Projetos",
+                "nav.skills": "Habilidades",
+                "nav.contact": "Contato",
+                "hero.title": "Olá, sou Roxana",
+                "hero.subtitle": "Full-Stack Developer · CEO & Co-Founder",
+                "hero.description": "Construo soluções com código e inteligência artificial. De plataformas de governança a sistemas de trading, transformo ideias complexas em produtos que impactam.",
+                "about.title": "Sobre Mim",
+                "about.subtitle": "Conheça um pouco mais sobre minha trajetória e o que me impulsiona.",
+                "about.p1": "Sou <strong>Roxana Alejandra Rolón</strong>, desenvolvedora Full-Stack da <strong>Argentina</strong> com paixão por construir produtos que combinam <strong>código de qualidade</strong> com <strong>inteligência artificial</strong>.",
+                "about.p2": "Como <strong>CEO e Co-Founder da Axis Tech AI</strong>, lidero o desenvolvimento de soluções tecnológicas personalizadas para governos, empresas e criadores de conteúdo em toda a América Latina. Não vendemos software genérico: construímos sistemas que se adaptam à voz, estrutura e objetivos de cada cliente.",
+                "about.p3": "Também sou a mente por trás do <strong>Partido IA</strong>, uma plataforma de governança onde agentes de IA baseados em figuras históricas debatem leis e projetos legislativos em tempo real, democratizando o acesso à informação política.",
+                "about.p4": "Quando não estou codando, você me encontrará explorando novas tecnologias, liderando equipes ou pensando na próxima solução que mudará a forma como interagimos com a tecnologia.",
+                "tag.fullstack": "Full-Stack Developer",
+                "tag.ai": "AI Engineer",
+                "tag.ceo": "CEO & Co-Founder",
+                "tag.solver": "Problem Solver",
+                "projects.title": "Projetos em Destaque",
+                "projects.subtitle": "Estes são alguns dos meus projetos mais ambiciosos que demonstram minhas habilidades técnicas e visão de produto.",
+                "badge.ceo": "CEO & Co-Founder",
+                "badge.live": "Ao Vivo",
+                "project.axis": "Empresa de IA sediada em Rosario, Argentina. Desenvolvemos sistemas de IA personalizados para governos, empresas e criadores. Redução de 40% nos custos operacionais, implementação em 48 horas e resultados 100% mensuráveis.",
+                "project.partido": "Sistema de governança com 264 agentes de IA baseados em figuras históricas que debatem leis e projetos legislativos de Santa Fe em tempo real. 12 ministérios, debates ao vivo e participação cidadã.",
+                "project.candle": "Plataforma avançada de análise de trading construída com Next.js, Tailwind CSS e Genkit AI. Reconhecimento de padrões em tempo real, backtesting de estratégias e interface profissional.",
+                "skills.title": "Habilidades e Tecnologias",
+                "skills.subtitle": "Meu arsenal técnico para construir aplicações modernas e escaláveis.",
+                "skill.lang": "🚀 Linguagens",
+                "skill.backend": "⚙️ Backend e Cloud",
+                "skill.frontend": "🎨 Frontend e Mobile",
+                "skill.ai": "🤖 Dados e IA",
+                "contact.title": "Vamos Conectar",
+                "contact.subtitle": "Pronto para colaborar no seu próximo projeto?",
+                "contact.getintouch": "Entre em Contato",
+                "contact.desc": "Estou aberta a novas oportunidades, colaborações e projetos desafiadores. Não hesite em entrar em contato por qualquer uma das minhas redes.",
+                "contact.fb": "Facebook:",
+                "contact.fbpersonal": "👤 Página Pessoal",
+                "contact.open": "Aberta a Oportunidades",
+                "opp.freelance": "Trabalho Freelance e por Contrato",
+                "opp.startup": "Colaborações com Startups e Empresas",
+                "opp.ai": "Consultoria de IA",
+                "opp.speaking": "Palestras e Conferências",
+                "opp.fullstack": "Desenvolvimento Full-Stack",
+                "contact.cta": "Enviar Email",
+                "footer.made": "Feito com",
+                "footer.by": "por"
+            },
+            zh: {
+                "nav.about": "关于我",
+                "nav.projects": "项目",
+                "nav.skills": "技能",
+                "nav.contact": "联系",
+                "hero.title": "你好，我是Roxana",
+                "hero.subtitle": "全栈开发工程师 · CEO & 联合创始人",
+                "hero.description": "我用代码和人工智能构建解决方案。从治理平台到交易系统，我将复杂的想法转化为具有影响力的产品。",
+                "about.title": "关于我",
+                "about.subtitle": "了解更多关于我的经历和动力。",
+                "about.p1": "我是<strong>Roxana Alejandra Rolón</strong>，来自<strong>阿根廷</strong>的全栈开发工程师，热衷于构建将<strong>优质代码</strong>与<strong>人工智能</strong>相结合的产品。",
+                "about.p2": "作为<strong>Axis Tech AI的CEO和联合创始人</strong>，我领导为拉丁美洲各国政府、企业和内容创作者开发定制技术解决方案。我们不销售通用软件：我们构建适应每个客户声音、结构和目标的系统。",
+                "about.p3": "我也是<strong>Partido IA</strong>的幕后推手，这是一个治理平台，基于历史人物的AI智能体实时辩论法律和立法项目，使政治信息的获取民主化。",
+                "about.p4": "当我不在编码时，你会发现我在探索新技术、领导团队，或思考下一个将改变我们与科技互动方式的解决方案。",
+                "tag.fullstack": "全栈开发工程师",
+                "tag.ai": "AI工程师",
+                "tag.ceo": "CEO & 联合创始人",
+                "tag.solver": "问题解决者",
+                "projects.title": "精选项目",
+                "projects.subtitle": "这些是我最具雄心的项目，展示了我的技术技能和产品愿景。",
+                "badge.ceo": "CEO & 联合创始人",
+                "badge.live": "直播中",
+                "project.axis": "总部位于阿根廷罗萨里奥的AI公司。我们为政府、企业和创作者开发定制AI系统。运营成本降低40%，48小时实施，100%可衡量成果。",
+                "project.partido": "基于历史人物的264个AI智能体的治理系统，实时辩论圣菲省的法律和立法项目。12个部委、现场辩论和公民参与。",
+                "project.candle": "使用Next.js、Tailwind CSS和Genkit AI构建的高级交易分析平台。实时模式识别、策略回测和专业级界面。",
+                "skills.title": "技能与技术",
+                "skills.subtitle": "我构建现代可扩展应用程序的技术武器库。",
+                "skill.lang": "🚀 编程语言",
+                "skill.backend": "⚙️ 后端与云",
+                "skill.frontend": "🎨 前端与移动端",
+                "skill.ai": "🤖 数据与AI",
+                "contact.title": "联系我",
+                "contact.subtitle": "准备好合作您的下一个项目了吗？",
+                "contact.getintouch": "取得联系",
+                "contact.desc": "我对新的机会、合作和具有挑战性的项目持开放态度。请随时通过我的任何社交网络联系我。",
+                "contact.fb": "Facebook:",
+                "contact.fbpersonal": "👤 个人主页",
+                "contact.open": "开放机会",
+                "opp.freelance": "自由职业与合同工作",
+                "opp.startup": "初创企业与商业合作",
+                "opp.ai": "AI咨询",
+                "opp.speaking": "演讲与讲座",
+                "opp.fullstack": "全栈开发",
+                "contact.cta": "发送邮件",
+                "footer.made": "用",
+                "footer.by": "制作"
+            },
+            ru: {
+                "nav.about": "Обо мне",
+                "nav.projects": "Проекты",
+                "nav.skills": "Навыки",
+                "nav.contact": "Контакты",
+                "hero.title": "Привет, я Роксана",
+                "hero.subtitle": "Full-Stack разработчик · CEO и соучредитель",
+                "hero.description": "Я создаю решения с помощью кода и искусственного интеллекта. От платформ управления до торговых систем — я превращаю сложные идеи в продукты, которые имеют значение.",
+                "about.title": "Обо мне",
+                "about.subtitle": "Узнайте больше о моем пути и том, что меня движет.",
+                "about.p1": "Я — <strong>Роксана Алехандра Ролон</strong>, Full-Stack разработчик из <strong>Аргентины</strong> с страстью к созданию продуктов, сочетающих <strong>качественный код</strong> с <strong>искусственным интеллектом</strong>.",
+                "about.p2": "Как <strong>CEO и соучредитель Axis Tech AI</strong>, я руковожу разработкой индивидуальных технологических решений для правительств, бизнеса и создателей контента по всей Латинской Америке. Мы не продаем универсальное ПО: мы создаем системы, адаптирующиеся к голосу, структуре и целям каждого клиента.",
+                "about.p3": "Я также являюсь создателем <strong>Partido IA</strong> — платформы управления, где ИИ-агенты на основе исторических личностей обсуждают законы и законодательные проекты Санта-Фе в реальном времени, демократизируя доступ к политической информации.",
+                "about.p4": "Когда я не пишу код, вы найдете меня за изучением новых технологий, руководством командами или размышлениями о следующем решении, которое изменит способ нашего взаимодействия с технологиями.",
+                "tag.fullstack": "Full-Stack разработчик",
+                "tag.ai": "AI инженер",
+                "tag.ceo": "CEO и соучредитель",
+                "tag.solver": "Решатель проблем",
+                "projects.title": "Избранные проекты",
+                "projects.subtitle": "Вот некоторые из моих самых амбициозных проектов, демонстрирующих мои технические навыки и видение продукта.",
+                "badge.ceo": "CEO и соучредитель",
+                "badge.live": "В эфире",
+                "project.axis": "Компания ИИ со штаб-квартирой в Росарио, Аргентина. Мы разрабатываем индивидуальные ИИ-системы для правительств, бизнеса и создателей. Снижение операционных расходов на 40%, внедрение за 48 часов и 100% измеримые результаты.",
+                "project.partido": "Система управления с 264 ИИ-агентами на основе исторических личностей, обсуждающими законы и законодательные проекты Санта-Фе в реальном времени. 12 министерств, прямые дебаты и гражданское участие.",
+                "project.candle": "Продвинутая платформа торгового анализа, построенная на Next.js, Tailwind CSS и Genkit AI. Распознавание паттернов в реальном времени, бэктестинг стратегий и профессиональный интерфейс.",
+                "skills.title": "Навыки и технологии",
+                "skills.subtitle": "Мой технический арсенал для создания современных масштабируемых приложений.",
+                "skill.lang": "🚀 Языки",
+                "skill.backend": "⚙️ Бэкенд и облако",
+                "skill.frontend": "🎨 Фронтенд и мобильные",
+                "skill.ai": "🤖 Данные и ИИ",
+                "contact.title": "Давайте свяжемся",
+                "contact.subtitle": "Готовы сотрудничать над вашим следующим проектом?",
+                "contact.getintouch": "Связаться",
+                "contact.desc": "Я открыта для новых возможностей, сотрудничества и сложных проектов. Не стесняйтесь обращаться через любую из моих сетей.",
+                "contact.fb": "Facebook:",
+                "contact.fbpersonal": "👤 Личная страница",
+                "contact.open": "Открыта для возможностей",
+                "opp.freelance": "Фриланс и контрактная работа",
+                "opp.startup": "Сотрудничество со стартапами и бизнесом",
+                "opp.ai": "AI-консалтинг",
+                "opp.speaking": "Выступления и конференции",
+                "opp.fullstack": "Full-Stack разработка",
+                "contact.cta": "Отправить письмо",
+                "footer.made": "Сделано с",
+                "footer.by": ""
+            }
+        };
+
+        let currentLang = localStorage.getItem('portfolio-lang') || 'en';
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('portfolio-lang', lang);
+            document.documentElement.lang = lang === 'zh' ? 'zh-CN' : lang === 'pt' ? 'pt-BR' : lang;
+
+            // Update all elements with data-i18n
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[lang] && translations[lang][key]) {
+                    el.innerHTML = translations[lang][key];
+                }
+            });
+
+            // Update current lang display
+            const labels = { en: 'EN', es: 'ES', pt: 'PT', zh: '中', ru: 'RU' };
+            document.getElementById('currentLang').textContent = labels[lang];
+
+            // Update active state in dropdown
+            document.querySelectorAll('.lang-option').forEach(opt => {
+                opt.classList.toggle('active', opt.dataset.lang === lang);
+            });
+        }
+
+        // Language selector toggle
+        const langBtn = document.getElementById('langBtn');
+        const langDropdown = document.getElementById('langDropdown');
+
+        langBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            langDropdown.classList.toggle('active');
+        });
+
+        document.addEventListener('click', () => {
+            langDropdown.classList.remove('active');
+        });
+
+        document.querySelectorAll('.lang-option').forEach(opt => {
+            opt.addEventListener('click', () => {
+                setLanguage(opt.dataset.lang);
+                langDropdown.classList.remove('active');
+            });
+        });
+
+        // Initialize language
+        setLanguage(currentLang);
+
+        // ─── STARS ───
+        const canvas = document.getElementById('starfield');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        let stars = [];
+        const STAR_COUNT = 150;
+
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+        class Star {
+            constructor() { this.reset(); }
+            reset() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.size = Math.random() * 2 + 0.5;
+                this.speedX = (Math.random() - 0.5) * 0.3;
+                this.speedY = (Math.random() - 0.5) * 0.3;
+                this.opacity = Math.random() * 0.8 + 0.2;
+                this.twinkle = Math.random() * 0.02;
+            }
+            update() {
+                this.x += this.speedX; this.y += this.speedY;
+                this.opacity += this.twinkle;
+                if (this.opacity > 1 || this.opacity < 0.2) this.twinkle *= -1;
+                if (this.x < 0 || this.x > width || this.y < 0 || this.y > height) this.reset();
+            }
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(255,255,255,${this.opacity})`;
+                ctx.fill();
+                if (this.size > 1.5) {
+                    ctx.beginPath();
+                    ctx.moveTo(this.x - this.size * 2, this.y);
+                    ctx.lineTo(this.x + this.size * 2, this.y);
+                    ctx.moveTo(this.x, this.y - this.size * 2);
+                    ctx.lineTo(this.x, this.y + this.size * 2);
+                    ctx.strokeStyle = `rgba(255,255,255,${this.opacity * 0.3})`;
+                    ctx.lineWidth = 0.5;
+                    ctx.stroke();
+                }
+            }
+        }
+        function initStars() {
+            stars = [];
+            for (let i = 0; i < STAR_COUNT; i++) stars.push(new Star());
+        }
+        function animate() {
+            ctx.clearRect(0, 0, width, height);
+            stars.forEach(s => { s.update(); s.draw(); });
+            requestAnimationFrame(animate);
+        }
+        window.addEventListener('resize', () => { resize(); initStars(); });
+        resize(); initStars(); animate();
+
+        // ─── SCROLL ANIMATIONS ───
+        const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('visible');
+            });
+        }, observerOptions);
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        // ─── MOBILE MENU ───
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navLinks = document.getElementById('navLinks');
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            mobileMenuBtn.textContent = navLinks.classList.contains('active') ? '✕' : '☰';
+        });
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    navLinks.classList.remove('active');
+                    mobileMenuBtn.textContent = '☰';
+                }
+            });
+        });
+
+        // ─── NAVBAR BG ON SCROLL ───
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            navbar.style.background = window.scrollY > 50 ? 'rgba(5,5,5,0.95)' : 'rgba(5,5,5,0.7)';
+        });
+    </script>
+</body>
+</html>
