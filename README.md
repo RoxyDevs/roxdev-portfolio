@@ -96,7 +96,7 @@ Si mi trabajo te ha sido útil o querés contribuir a mi contenido, toda ayuda e
 🔗 PayPal: @roxdevit
 
 📬 Contacto
-Email: contacto@axistechai.com
+Email: roxana@axistechai.com
 ¿Listo para construir algo con IA? → Hablemos
 <div align="center"> <p>Hecho con 💜 desde Argentina 🇦🇷</p> <p>© 2026 Roxana Alejandra Rolón</p> </div> ```
 🌟 Versión Compacta (con PayPal)
