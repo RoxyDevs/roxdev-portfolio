@@ -1,8 +1,6 @@
 # 👋 Hola, soy Roxana Rolón
 
-<p align="center">
-  <img src="https://canva.link/fuwjdwklf14n04k" alt="Roxana Rolón" width="150" />
-</p>
+<img src="Diseño sin título.png" alt="Roxana Rolón" width="150" />
   
   <p><strong>Full-Stack Developer</strong> · <strong>AI Engineer</strong> · <strong>CEO & Co-Founder</strong></p>
   
