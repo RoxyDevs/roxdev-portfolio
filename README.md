@@ -1,9 +1,8 @@
 # 👋 Hola, soy Roxana Rolón
 
-<div align="center">
-  <img src="https://ui-avatars.com/api/?name=Roxana+Rolon&background=a78bfa&color=fff&size=150&font-size=0.3&bold=true" alt="Roxana Rolón" width="150" />
-  
-  <h1>Roxana Alejandra Rolón</h1>
+<p align="center">
+  <img src="https://canva.link/fuwjdwklf14n04k" alt="Roxana Rolón" width="150" />
+</p>
   
   <p><strong>Full-Stack Developer</strong> · <strong>AI Engineer</strong> · <strong>CEO & Co-Founder</strong></p>
   
