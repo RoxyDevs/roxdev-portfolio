@@ -1,6 +1,8 @@
 # 👋 Hola, soy Roxana Rolón
 
-<img src="Diseño sin título.png" alt="Roxana Rolón" width="150" />
+<div style="display: flex; justify-content: center; align-items: center;">
+  <img src="Diseño sin título.png" alt="Roxana Rolón" width="150" />
+</div>
   
   <p><strong>Full-Stack Developer</strong> · <strong>AI Engineer</strong> · <strong>CEO & Co-Founder</strong></p>
   
