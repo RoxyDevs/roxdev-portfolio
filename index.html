@@ -311,6 +311,102 @@
             z-index: 2;
         }
 
+        .books-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        .book-card {
+            background: var(--bg-card); border: 1px solid var(--border);
+            border-radius: 16px; overflow: hidden;
+            transition: all 0.4s ease; position: relative;
+        }
+        .book-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(167, 139, 250, 0.3);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4), 0 0 40px var(--accent-glow);
+        }
+        .book-cover {
+            width: 100%; height: 250px;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            gap: 1rem; position: relative; overflow: hidden;
+        }
+        .book-cover::after {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(180deg, transparent 50%, var(--bg-card) 100%);
+        }
+        .book-number {
+            position: absolute; top: 1rem; left: 1rem;
+            padding: 0.4rem 0.8rem;
+            background: rgba(167, 139, 250, 0.2);
+            color: var(--accent); font-size: 0.75rem; font-weight: 700;
+            border-radius: 6px;
+            border: 1px solid rgba(167, 139, 250, 0.3);
+            z-index: 2;
+        }
+        .book-cover span { position: relative; z-index: 1; }
+        .book-content { padding: 1.5rem; }
+        .book-content h3 { font-size: 1.1rem; font-weight: 600; margin-bottom: 0.8rem; color: var(--text-primary); }
+        .book-content p { color: var(--text-secondary); font-size: 0.9rem; line-height: 1.5; margin-bottom: 1.2rem; }
+        .book-price {
+            display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1.2rem;
+        }
+        .price-regular {
+            color: var(--text-secondary); font-size: 0.85rem;
+            text-decoration: line-through;
+        }
+        .price-launch {
+            color: var(--accent); font-size: 1.3rem; font-weight: 700;
+        }
+        .book-btn {
+            width: 100%; padding: 0.8rem;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-secondary) 100%);
+            color: white; border: none; border-radius: 8px;
+            font-size: 0.95rem; font-weight: 600;
+            cursor: pointer; transition: all 0.3s ease;
+        }
+        .book-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(167, 139, 250, 0.3);
+        }
+        .bundle-offer {
+            background: linear-gradient(135deg, rgba(167, 139, 250, 0.1) 0%, rgba(96, 165, 250, 0.1) 100%);
+            border: 2px solid rgba(167, 139, 250, 0.3);
+            border-radius: 16px; padding: 2.5rem;
+            text-align: center;
+        }
+        .bundle-offer h3 { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.8rem; color: var(--text-primary); }
+        .bundle-offer p { color: var(--text-secondary); font-size: 1rem; margin-bottom: 1.5rem; }
+        .bundle-price {
+            display: flex; align-items: center; justify-content: center; gap: 1rem; margin-bottom: 1.5rem;
+        }
+        .bundle-price .price-regular {
+            color: var(--text-secondary); font-size: 1rem;
+            text-decoration: line-through;
+        }
+        .bundle-price .price-launch {
+            color: var(--accent); font-size: 2rem; font-weight: 800;
+        }
+        .discount {
+            padding: 0.5rem 1rem;
+            background: var(--accent); color: var(--bg-primary);
+            font-size: 0.85rem; font-weight: 700;
+            border-radius: 8px;
+        }
+        .bundle-btn {
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-secondary) 100%);
+            color: white; border: none; border-radius: 8px;
+            font-size: 1rem; font-weight: 600;
+            cursor: pointer; transition: all 0.3s ease;
+        }
+        .bundle-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(167, 139, 250, 0.4);
+        }
+
         .skills-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -445,6 +541,7 @@
             <ul class="nav-links" id="navLinks">
                 <li><a href="#about" data-i18n="nav.about">About</a></li>
                 <li><a href="#projects" data-i18n="nav.projects">Projects</a></li>
+                <li><a href="#books" data-i18n="nav.books">Books</a></li>
                 <li><a href="#skills" data-i18n="nav.skills">Skills</a></li>
                 <li><a href="#contact" data-i18n="nav.contact">Contact</a></li>
             </ul>
@@ -523,13 +620,14 @@
             <div class="about-content fade-in">
                 <div class="about-text">
                     <p data-i18n="about.p1">I'm <strong>Roxana Alejandra Rolón</strong>, a Full-Stack Developer from <strong>Argentina</strong> with a passion for building products that combine <strong>quality code</strong> with <strong>artificial intelligence</strong>.</p>
-                    <p data-i18n="about.p2">As <strong>CEO and Co-Founder of <a href="https://axistechai.com" target="_blank" style="color:var(--accent);text-decoration:none;">Axis Tech AI</a></strong>, I lead the development of customized technology solutions for governments, businesses, and content creators across Latin America. We don't sell generic software: we build systems that adapt to each client's voice, structure, and goals.</p>
-                    <p data-i18n="about.p3">I'm also the mind behind <strong><a href="https://partidoia.com.ar" target="_blank" style="color:var(--accent);text-decoration:none;">Partido IA</a></strong>, a governance platform where AI agents based on historical figures debate laws and legislative projects in real time, democratizing access to political information.</p>
+                    <p data-i18n="about.p2">As <strong>Executive Partner and Co-Founder of <a href="https://axistechai.com" target="_blank" style="color:var(--accent);text-decoration:none;">Axis Tech AI</a></strong>, I lead the development of customized technology solutions for governments, businesses, and content creators across Latin America. We don't sell generic software: we build systems that adapt to each client's voice, structure, and goals.</p>
+                    <p data-i18n="about.p3">I'm also the <strong>Principal Architect and Developer</strong> of <strong><a href="https://partidoia.com.ar" target="_blank" style="color:var(--accent);text-decoration:none;">Partido IA</a></strong>, a governance platform where 264 AI agents based on historical figures debate laws and legislative projects in real time. I designed and built the complete infrastructure of this innovative platform, democratizing access to political information through complex real-time systems and autonomous agents.</p>
                     <p data-i18n="about.p4">When I'm not coding, you'll find me exploring new technologies, leading teams, or thinking about the next solution that will change the way we interact with technology.</p>
                     <div class="about-tags">
                         <span class="tag" data-i18n="tag.fullstack">Full-Stack Developer</span>
                         <span class="tag" data-i18n="tag.ai">AI Engineer</span>
-                        <span class="tag" data-i18n="tag.ceo">CEO & Co-Founder</span>
+                        <span class="tag" data-i18n="tag.executive">Executive Partner</span>
+                        <span class="tag" data-i18n="tag.author">Author</span>
                         <span class="tag" data-i18n="tag.solver">Problem Solver</span>
                         <span class="tag">Argentina 🇦🇷</span>
                     </div>
@@ -564,13 +662,13 @@
                     </div>
                 </div>
                 <div class="project-card fade-in">
-                    <span class="featured-badge" data-i18n="badge.live">Live</span>
+                    <span class="featured-badge" data-i18n="badge.architect">Lead Developer & Architect</span>
                     <div class="project-image" style="background: linear-gradient(135deg, #312e81 0%, #0f0f1a 100%);">
                         <span style="font-size: 3.5rem;">🏛️</span>
                     </div>
                     <div class="project-content">
                         <h3><a href="https://partidoia.com.ar" target="_blank">Partido IA</a></h3>
-                        <p data-i18n="project.partido">Governance system with 264 AI agents based on historical figures debating laws and legislative projects from Santa Fe in real time. 12 ministries, live debates, and citizen participation.</p>
+                        <p data-i18n="project.partido">I architected and developed the complete infrastructure for this governance platform featuring 264 AI agents based on historical figures debating laws and legislative projects from Santa Fe in real time. The system includes 12 ministries, live debates, and citizen participation through complex real-time systems and autonomous agent orchestration.</p>
                         <div class="project-tags">
                             <span class="project-tag">Next.js</span>
                             <span class="project-tag">AI Agents</span>
@@ -639,6 +737,86 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </section>
+
+        <!-- Books -->
+        <section id="books">
+            <div class="section-header fade-in">
+                <h2 data-i18n="books.title">RoxDev Learning Series</h2>
+                <p data-i18n="books.subtitle">Master your journey from Full-Stack Developer to SaaS Builder. Transform your career with practical, AI-powered learning.</p>
+            </div>
+            <div class="books-grid">
+                <div class="book-card fade-in">
+                    <div class="book-cover" style="background: linear-gradient(135deg, #1e3a8a 0%, #0f0f1a 100%);">
+                        <div class="book-number">VOL. 1</div>
+                        <span style="font-size: 2.5rem;">📘</span>
+                    </div>
+                    <div class="book-content">
+                        <h3>Full Stack Developer Mastery 2026</h3>
+                        <p data-i18n="book.vol1">Build real applications from scratch. Learn the complete stack, integrate AI from day one, and start your career as a developer.</p>
+                        <div class="book-price">
+                            <span class="price-regular">$19.99</span>
+                            <span class="price-launch">$14.99</span>
+                        </div>
+                        <button class="book-btn" onclick="scrollToContact()">Pre-Order Now</button>
+                    </div>
+                </div>
+                <div class="book-card fade-in">
+                    <div class="book-cover" style="background: linear-gradient(135deg, #15803d 0%, #0f0f1a 100%);">
+                        <div class="book-number">VOL. 2</div>
+                        <span style="font-size: 2.5rem;">🤖</span>
+                    </div>
+                    <div class="book-content">
+                        <h3>AI Developer Mastery 2026</h3>
+                        <p data-i18n="book.vol2">Specialize in the most demanded technology. Master AI agents, automation, and build intelligent systems that scale.</p>
+                        <div class="book-price">
+                            <span class="price-regular">$24.99</span>
+                            <span class="price-launch">$19.99</span>
+                        </div>
+                        <button class="book-btn" onclick="scrollToContact()">Pre-Order Now</button>
+                    </div>
+                </div>
+                <div class="book-card fade-in">
+                    <div class="book-cover" style="background: linear-gradient(135deg, #ea580c 0%, #0f0f1a 100%);">
+                        <div class="book-number">VOL. 3</div>
+                        <span style="font-size: 2.5rem;">💼</span>
+                    </div>
+                    <div class="book-content">
+                        <h3>Freelance Developer Mastery 2026</h3>
+                        <p data-i18n="book.vol3">Monetize your skills. Build your personal brand, land high-value clients, and achieve financial freedom as a freelancer.</p>
+                        <div class="book-price">
+                            <span class="price-regular">$24.99</span>
+                            <span class="price-launch">$19.99</span>
+                        </div>
+                        <button class="book-btn" onclick="scrollToContact()">Pre-Order Now</button>
+                    </div>
+                </div>
+                <div class="book-card fade-in">
+                    <div class="book-cover" style="background: linear-gradient(135deg, #7c3aed 0%, #0f0f1a 100%);">
+                        <div class="book-number">VOL. 4</div>
+                        <span style="font-size: 2.5rem;">🚀</span>
+                    </div>
+                    <div class="book-content">
+                        <h3>SaaS Builder Mastery 2026</h3>
+                        <p data-i18n="book.vol4">Build scalable products. Create recurring revenue, launch your own SaaS, and achieve true entrepreneurial freedom.</p>
+                        <div class="book-price">
+                            <span class="price-regular">$29.99</span>
+                            <span class="price-launch">$24.99</span>
+                        </div>
+                        <button class="book-btn" onclick="scrollToContact()">Pre-Order Now</button>
+                    </div>
+                </div>
+            </div>
+            <div class="bundle-offer fade-in">
+                <h3>🎁 RoxDev Complete Mastery Bundle</h3>
+                <p>Get all 4 volumes + exclusive access to a private community</p>
+                <div class="bundle-price">
+                    <span class="price-regular">$99.96</span>
+                    <span class="price-launch">$49.99</span>
+                    <span class="discount">50% OFF</span>
+                </div>
+                <button class="bundle-btn" onclick="scrollToContact()">Secure Your Bundle</button>
             </div>
         </section>
 
