@@ -742,12 +742,16 @@
             <div class="section-header fade-in">
                 <h2 data-i18n="books.title">RoxDev Learning Series</h2>
                 <p data-i18n="books.subtitle">Master your journey from Full-Stack Developer to SaaS Builder. Transform your career with practical, AI-powered learning.</p>
+                <div class="countdown-banner" id="countdownBanner">
+                    <span>⏰ Pre-Launch Countdown:</span>
+                    <span id="countdown" style="font-weight: 700; color: #22c55e; margin-left: 0.5rem;"></span>
+                </div>
             </div>
             <div class="books-grid">
-                <div class="book-card fade-in">
-                    <div class="book-cover" style="background: linear-gradient(135deg, #1e3a8a 0%, #0f0f1a 100%);">
-                        <div class="book-number">VOL. 1</div>
-                        <span style="font-size: 2.5rem;">📘</span>
+                <div class="book-card fade-in" data-book="vol1">
+                    <div class="book-cover">
+                        <img src="./assets/books/vol1.png" alt="Full Stack Developer Mastery 2026" style="width: 100%; height: 100%; object-fit: cover;">
+                        <div class="stock-badge">Stock: <span class="stock-count">30</span>/30</div>
                     </div>
                     <div class="book-content">
                         <h3>Full Stack Developer Mastery 2026</h3>
@@ -756,13 +760,13 @@
                             <span class="price-regular">$19.99</span>
                             <span class="price-launch">$14.99</span>
                         </div>
-                        <button class="book-btn" onclick="scrollToContact()">Pre-Order Now</button>
+                        <button class="book-btn" onclick="openCheckout('vol1')">Pre-Order Now</button>
                     </div>
                 </div>
-                <div class="book-card fade-in">
-                    <div class="book-cover" style="background: linear-gradient(135deg, #15803d 0%, #0f0f1a 100%);">
-                        <div class="book-number">VOL. 2</div>
-                        <span style="font-size: 2.5rem;">🤖</span>
+                <div class="book-card fade-in" data-book="vol2">
+                    <div class="book-cover">
+                        <img src="./assets/books/vol2.png" alt="AI Developer Mastery 2026" style="width: 100%; height: 100%; object-fit: cover;">
+                        <div class="stock-badge">Stock: <span class="stock-count">30</span>/30</div>
                     </div>
                     <div class="book-content">
                         <h3>AI Developer Mastery 2026</h3>
@@ -771,13 +775,13 @@
                             <span class="price-regular">$24.99</span>
                             <span class="price-launch">$19.99</span>
                         </div>
-                        <button class="book-btn" onclick="scrollToContact()">Pre-Order Now</button>
+                        <button class="book-btn" onclick="openCheckout('vol2')">Pre-Order Now</button>
                     </div>
                 </div>
-                <div class="book-card fade-in">
-                    <div class="book-cover" style="background: linear-gradient(135deg, #ea580c 0%, #0f0f1a 100%);">
-                        <div class="book-number">VOL. 3</div>
-                        <span style="font-size: 2.5rem;">💼</span>
+                <div class="book-card fade-in" data-book="vol3">
+                    <div class="book-cover">
+                        <img src="./assets/books/vol3.png" alt="Freelance Developer Mastery 2026" style="width: 100%; height: 100%; object-fit: cover;">
+                        <div class="stock-badge">Stock: <span class="stock-count">30</span>/30</div>
                     </div>
                     <div class="book-content">
                         <h3>Freelance Developer Mastery 2026</h3>
@@ -786,13 +790,13 @@
                             <span class="price-regular">$24.99</span>
                             <span class="price-launch">$19.99</span>
                         </div>
-                        <button class="book-btn" onclick="scrollToContact()">Pre-Order Now</button>
+                        <button class="book-btn" onclick="openCheckout('vol3')">Pre-Order Now</button>
                     </div>
                 </div>
-                <div class="book-card fade-in">
-                    <div class="book-cover" style="background: linear-gradient(135deg, #7c3aed 0%, #0f0f1a 100%);">
-                        <div class="book-number">VOL. 4</div>
-                        <span style="font-size: 2.5rem;">🚀</span>
+                <div class="book-card fade-in" data-book="vol4">
+                    <div class="book-cover">
+                        <img src="./assets/books/vol4.png" alt="SaaS Builder Mastery 2026" style="width: 100%; height: 100%; object-fit: cover;">
+                        <div class="stock-badge">Stock: <span class="stock-count">30</span>/30</div>
                     </div>
                     <div class="book-content">
                         <h3>SaaS Builder Mastery 2026</h3>
@@ -801,21 +805,26 @@
                             <span class="price-regular">$29.99</span>
                             <span class="price-launch">$24.99</span>
                         </div>
-                        <button class="book-btn" onclick="scrollToContact()">Pre-Order Now</button>
+                        <button class="book-btn" onclick="openCheckout('vol4')">Pre-Order Now</button>
                     </div>
                 </div>
             </div>
             <div class="bundle-offer fade-in">
+                <div class="bundle-image">
+                    <img src="./assets/books/bundle.png" alt="RoxDev Complete Mastery Bundle" style="width: 100%; height: auto; border-radius: 12px; margin-bottom: 1.5rem;">
+                </div>
                 <h3>🎁 RoxDev Complete Mastery Bundle</h3>
-                <p>Get all 4 volumes + exclusive access to a private community</p>
+                <p>Get all 4 volumes + exclusive access to a private community + lifetime updates</p>
+                <div class="bundle-stock">Limited Pre-Launch Stock: <strong>30 Bundles Available</strong></div>
                 <div class="bundle-price">
                     <span class="price-regular">$99.96</span>
                     <span class="price-launch">$49.99</span>
                     <span class="discount">50% OFF</span>
                 </div>
-                <button class="bundle-btn" onclick="scrollToContact()">Secure Your Bundle</button>
+                <button class="bundle-btn" onclick="openCheckout('bundle')">Secure Your Bundle</button>
             </div>
         </section>
+
 
         <!-- Skills -->
         <section id="skills">
@@ -1302,6 +1311,69 @@
         window.addEventListener('scroll', () => {
             navbar.style.background = window.scrollY > 50 ? 'rgba(5,5,5,0.95)' : 'rgba(5,5,5,0.7)';
         });
+    </script>
+    <script>
+
+    // ─── COUNTDOWN & STOCK MANAGEMENT ───
+    const PRE_LAUNCH_END = new Date('2026-06-19T00:00:00-03:00').getTime();
+    let stockStatus = {
+        vol1: 30,
+        vol2: 30,
+        vol3: 30,
+        vol4: 30,
+        bundle: 30
+    };
+
+    function initCountdown() {
+        const countdownElement = document.getElementById('countdown');
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = PRE_LAUNCH_END - now;
+            if (distance < 0) {
+                countdownElement.textContent = 'Pre-Launch Finalizado ✓';
+                document.getElementById('countdownBanner').style.background = 'linear-gradient(135deg, rgba(239, 68, 68, 0.1) 0%, rgba(239, 68, 68, 0.05) 100%)';
+                document.getElementById('countdownBanner').style.borderColor = 'rgba(239, 68, 68, 0.3)';
+                return;
+            }
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            countdownElement.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+        }
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+    }
+
+    function updateStockDisplay() {
+        document.querySelectorAll('[data-book]').forEach(card => {
+            const bookType = card.dataset.book;
+            const stockCount = card.querySelector('.stock-count');
+            const stockBadge = card.querySelector('.stock-badge');
+            if (stockCount) stockCount.textContent = stockStatus[bookType];
+            if (stockStatus[bookType] <= 5 && stockStatus[bookType] > 0) {
+                stockBadge.classList.add('low-stock');
+            } else if (stockStatus[bookType] === 0) {
+                card.classList.add('sold-out');
+                const btn = card.querySelector('.book-btn');
+                btn.textContent = 'AGOTADO';
+                btn.disabled = true;
+            }
+        });
+    }
+
+    function decrementStock(bookType) {
+        if (stockStatus[bookType] > 0) {
+            stockStatus[bookType]--;
+            updateStockDisplay();
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        initCountdown();
+        updateStockDisplay();
+    });
+
     </script>
 </body>
 </html>
